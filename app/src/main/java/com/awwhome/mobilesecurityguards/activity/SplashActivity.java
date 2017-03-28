@@ -12,6 +12,9 @@ import android.widget.TextView;
 import com.awwhome.mobilesecurityguards.R;
 import com.awwhome.mobilesecurityguards.utils.StreamUtil;
 
+
+import org.json.JSONObject;
+
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -108,6 +111,17 @@ public class SplashActivity extends Activity {
                         String json = StreamUtil.stream2String(inputStream);
 
                         Log.d(TAG, "run: 获取到的服务器的json字符串：" + json);
+
+                        JSONObject jsonObject = new JSONObject(json);
+
+                        String versionName = (String) jsonObject.get("versionName");
+                        String versionCode = (String) jsonObject.get("versionCode");
+                        String versionDesc = (String) jsonObject.get("versionDesc");
+                        String downloadUrl = (String) jsonObject.get("downloadUrl");
+
+                        Log.d(TAG, "run: 解析后的json字符串：versionName:" + versionName + ",versionCode:" +
+                                versionCode + ",versionDesc" + versionDesc + ",downloadUrl" + downloadUrl);
+
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
