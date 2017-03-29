@@ -43,15 +43,18 @@ public class SplashActivity extends Activity {
 
     private static final String TAG = "SplashActivity";
 
+    private TextView tv_version_name;
+
     // 提示用户更新状态码
     private static final int PROMPT_UPDATE = 100;
     // 跳转到home页面状态码
     private static final int ENTER_HOME = 101;
 
-    private TextView tv_version_name;
+    // 本地版本码
     private int localVersionCode;
-
+    // 版本描述
     private String versionDesc;
+    // 下载地址
     private String downloadUrl;
 
     private Handler handler = new Handler() {
@@ -101,6 +104,7 @@ public class SplashActivity extends Activity {
             }
         });
 
+        // 显示弹出框
         dialog.show();
     }
 
@@ -132,14 +136,17 @@ public class SplashActivity extends Activity {
 
                 @Override
                 public void onError(Throwable ex, boolean isOnCallback) {
+                    Log.d(TAG, "onError: Error");
                 }
 
                 @Override
                 public void onCancelled(CancelledException cex) {
+                    Log.d(TAG, "onCancelled: Cancel");
                 }
 
                 @Override
                 public void onFinished() {
+                    Log.d(TAG, "onFinished: Finish");
                 }
 
                 //网络请求之前回调
@@ -150,6 +157,7 @@ public class SplashActivity extends Activity {
                 //网络请求开始的时候回调
                 @Override
                 public void onStarted() {
+
                 }
 
                 //下载的时候不断回调的方法
