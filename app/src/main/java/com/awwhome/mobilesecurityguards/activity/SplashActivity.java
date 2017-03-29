@@ -16,6 +16,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -78,6 +81,7 @@ public class SplashActivity extends Activity {
             }
         }
     };
+    private RelativeLayout activity_splash;
 
     /**
      * 更新版本对话框
@@ -214,6 +218,20 @@ public class SplashActivity extends Activity {
 
         initView();
         initData();
+
+        initAnimation();
+    }
+
+    /**
+     * 添加淡入动画
+     */
+    private void initAnimation() {
+
+        // 第一个参数为完全透明，第二个参数为完全显示
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
+        // 动画持续时间
+        alphaAnimation.setDuration(3000);
+        activity_splash.startAnimation(alphaAnimation);
     }
 
     /**
@@ -221,6 +239,7 @@ public class SplashActivity extends Activity {
      */
     public void initView() {
         tv_version_name = (TextView) findViewById(R.id.tv_version_name);
+        activity_splash = (RelativeLayout) findViewById(R.id.activity_splash);
 
     }
 
