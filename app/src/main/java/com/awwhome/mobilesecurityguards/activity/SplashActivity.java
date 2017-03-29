@@ -104,6 +104,14 @@ public class SplashActivity extends Activity {
             }
         });
 
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                Log.d(TAG, "onCancel: 点击了取消按钮");
+                enterHome();
+            }
+        });
+
         // 显示弹出框
         dialog.show();
     }
@@ -129,9 +137,7 @@ public class SplashActivity extends Activity {
                 @Override
                 public void onSuccess(File result) {
                     //apk下载完成后，调用系统的安装方法
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setDataAndType(Uri.fromFile(result), "application/vnd.android.package-archive");
-                    SplashActivity.this.startActivity(intent);
+                    installApk(result);
                 }
 
                 @Override
@@ -167,6 +173,28 @@ public class SplashActivity extends Activity {
                     Log.d(TAG, "onLoading: current：" + current + "，total：" + total);
                 }
             });
+        }
+    }
+
+    /**
+     * 安装apk
+     *
+     * @param file apk文件
+     */
+    private void installApk(File file) {
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+//        startActivity(intent);
+        startActivityForResult(intent, 0);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // 点击取消按钮后进入home页面
+        if (requestCode == 0) {
+            enterHome();
         }
     }
 
