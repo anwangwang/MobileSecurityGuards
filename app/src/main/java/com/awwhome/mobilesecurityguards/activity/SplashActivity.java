@@ -1,10 +1,14 @@
 package com.awwhome.mobilesecurityguards.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,6 +19,7 @@ import android.widget.Toast;
 
 import com.awwhome.mobilesecurityguards.R;
 import com.awwhome.mobilesecurityguards.utils.StreamUtil;
+import com.awwhome.mobilesecurityguards.utils.ToastUtil;
 
 
 import org.json.JSONObject;
@@ -40,6 +45,9 @@ public class SplashActivity extends Activity {
     private TextView tv_version_name;
     private int localVersionCode;
 
+    private String versionDesc;
+    private String downloadUrl;
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -47,21 +55,56 @@ public class SplashActivity extends Activity {
 
             switch (msg.what) {
                 case PROMPT_UPDATE:
-
                     Log.d(TAG, "handleMessage: 有新版本！！");
                     // 弹框，提示用户更新
-                    Toast.makeText(SplashActivity.this, "更新版本", Toast.LENGTH_SHORT).show();
+                    ToastUtil.showShort(SplashActivity.this, "更新版本");
+                    showUpdateDialog();
                     break;
                 case ENTER_HOME:
                     // 进入主页面
-                    Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
-                    startActivity(intent);
+                    enterHome();
                     break;
                 default:
                     break;
             }
         }
     };
+
+    /**
+     * 更新版本对话框
+     */
+    private void showUpdateDialog() {
+        // 参数传this,不能为getApplicationContext()。
+        // dialog是依赖activity存在的
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setIcon(R.mipmap.ic_launcher);
+        dialog.setTitle("更新版本");
+        dialog.setMessage(versionDesc);
+        dialog.setPositiveButton("立即更新", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // 下载apk
+            }
+        });
+        dialog.setNegativeButton("稍后再说", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ToastUtil.showShort(SplashActivity.this, "稍后再说");
+                enterHome();
+            }
+        });
+
+        dialog.show();
+    }
+
+    /**
+     * 跳转到home界面
+     */
+    private void enterHome() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +151,6 @@ public class SplashActivity extends Activity {
 
         // 2.获取服务器版本号
         new Thread() {
-
             @Override
             public void run() {
                 long startTime = System.currentTimeMillis();
@@ -144,8 +186,8 @@ public class SplashActivity extends Activity {
 
                         String versionName = jsonObject.getString("versionName");
                         String versionCode = jsonObject.getString("versionCode");
-                        String versionDesc = jsonObject.getString("versionDesc");
-                        String downloadUrl = jsonObject.getString("downloadUrl");
+                        versionDesc = jsonObject.getString("versionDesc");
+                        downloadUrl = jsonObject.getString("downloadUrl");
 
                         Log.d(TAG, "run: 解析后的json字符串：versionName:" + versionName + ",versionCode:" +
                                 versionCode + ",versionDesc" + versionDesc + ",downloadUrl" + downloadUrl);
@@ -162,6 +204,8 @@ public class SplashActivity extends Activity {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    // 请求网络异常，进入home界面
+                    enterHome();
                 } finally {
                     long endTime = System.currentTimeMillis();
                     if (endTime - startTime < 4000) {
