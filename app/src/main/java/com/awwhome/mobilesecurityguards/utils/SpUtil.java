@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
  * SharedPreferences工具类
  * Created by awwho on 2017/4/3.
  */
-public class SpUtils {
+public class SpUtil {
 
     private static SharedPreferences sp;
 

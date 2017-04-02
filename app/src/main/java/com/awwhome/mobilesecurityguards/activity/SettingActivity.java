@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.awwhome.mobilesecurityguards.R;
+import com.awwhome.mobilesecurityguards.utils.ConstantValue;
+import com.awwhome.mobilesecurityguards.utils.SpUtil;
 import com.awwhome.mobilesecurityguards.widget.SettingItemView;
 
 /**
+ * 设置中心
  * Created by awwho on 2017/4/2.
  */
 public class SettingActivity extends Activity {
@@ -20,13 +23,18 @@ public class SettingActivity extends Activity {
         setContentView(R.layout.activity_setting);
 
         initUpdateView();
-        initListener();
+        initData();
     }
 
     /**
      * 初始化事件
      */
-    private void initListener() {
+    private void initData() {
+
+        // 获取上一次存储的节点值
+        boolean open_update = SpUtil.getBoolean(this, ConstantValue.OPEN_UPDATE, false);
+        // 将节点值设置给siv_update控件
+        siv_update.setCheck(open_update);
 
         // 自动更新点击事件
         siv_update.setOnClickListener(new View.OnClickListener() {
@@ -37,6 +45,9 @@ public class SettingActivity extends Activity {
                 // 若选中，修改为为选中
                 // 若未选中，修改为选中
                 siv_update.setCheck(!checked);
+
+                // 当控件点击后的状态发生改变时，存储新的节点值
+                SpUtil.putBoolean(getApplicationContext(), ConstantValue.OPEN_UPDATE, !checked);
             }
         });
     }
