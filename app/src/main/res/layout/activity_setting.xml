@@ -17,7 +17,7 @@
         android:padding="5dp">
 
         <TextView
-            android:id="@+id/tv_update_setting"
+            android:id="@+id/tv_update_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="自动更新设置"
@@ -25,10 +25,10 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/tv_update_on_off"
+            android:id="@+id/tv_update_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_update_setting"
+            android:layout_below="@id/tv_update_title"
             android:text="自动更新已关闭"
             android:textColor="#000"
             android:textSize="18sp" />
@@ -43,7 +43,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@id/tv_update_on_off"
+            android:layout_below="@id/tv_update_desc"
             android:background="#000" />
 
 
