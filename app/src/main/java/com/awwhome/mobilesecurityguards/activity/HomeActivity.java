@@ -1,11 +1,13 @@
 package com.awwhome.mobilesecurityguards.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -32,7 +34,28 @@ public class HomeActivity extends Activity {
 
         initView();
         initData();
+        initListener();
 
+    }
+
+    /**
+     * 初始化事件
+     */
+    private void initListener() {
+
+        gv_home.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0: // 点击安全卫士
+                        break;
+                    case 8:// 点击设置中心
+                        Intent intent = new Intent(HomeActivity.this, SettingActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+            }
+        });
     }
 
     /**
@@ -50,6 +73,7 @@ public class HomeActivity extends Activity {
         };
 
         gv_home.setAdapter(new MyAdapter());
+
     }
 
 
