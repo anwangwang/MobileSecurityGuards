@@ -15,6 +15,10 @@ import com.awwhome.mobilesecurityguards.R;
  */
 public class SettingItemView extends RelativeLayout {
 
+    private CheckBox cb_box;
+    private TextView tv_title;
+    private TextView tv_desc;
+
     public SettingItemView(Context context) {
         this(context, null);
     }
@@ -32,10 +36,40 @@ public class SettingItemView extends RelativeLayout {
 
         // findViewById 这里可以直接使用findViewById获取控件，
         // 是因为已经将布局setting_item_view挂载到了当前的SettingItemView布局中
-        TextView tv_title = (TextView) findViewById(R.id.tv_title);
-        TextView tv_desc = (TextView) findViewById(R.id.tv_desc);
-        CheckBox cb_box = (CheckBox) findViewById(R.id.cb_box);
-
+        tv_title = (TextView) findViewById(R.id.tv_title);
+        tv_desc = (TextView) findViewById(R.id.tv_desc);
+        cb_box = (CheckBox) findViewById(R.id.cb_box);
 
     }
+
+    /**
+     * 返回当前SettingItemView是否为选中开启状态
+     * 根据cb_box判断是否为选中 true 选中，false 关闭
+     *
+     * @return true 开启 false 关闭
+     */
+    public boolean isChecked() {
+        return cb_box.isChecked();
+    }
+
+    /**
+     * 设置选中状态
+     *
+     * @param isCheck 是否作为开启的变量，由点击过程去做传递
+     */
+    public void setCheck(boolean isCheck) {
+
+        // 设置cb_box是否选中，根据isCheck
+        cb_box.setChecked(isCheck);
+
+        if (isCheck) {
+            // 选中
+            tv_desc.setText("自动更新已开启");
+        } else {
+            // 未选中
+            tv_desc.setText("自动更新已关闭");
+        }
+    }
+
+
 }
