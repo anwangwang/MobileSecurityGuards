@@ -23,6 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.awwhome.mobilesecurityguards.R;
+import com.awwhome.mobilesecurityguards.utils.ConstantValue;
+import com.awwhome.mobilesecurityguards.utils.SpUtil;
 import com.awwhome.mobilesecurityguards.utils.StreamUtil;
 import com.awwhome.mobilesecurityguards.utils.ToastUtil;
 
@@ -253,8 +255,19 @@ public class SplashActivity extends Activity {
         // 2，将版本名称显示到控件上
         tv_version_name.setText("版本名称：" + versionName);
 
-        // 3，检测新版本，如有新版本，提示用户更新
-        checkAppVersion();
+        // 获取自动更新是否开启
+        boolean open_update = SpUtil.getBoolean(this, ConstantValue.OPEN_UPDATE, false);
+        if (open_update) {
+            // 开启
+            // 3，检测新版本，如有新版本，提示用户更新
+            checkAppVersion();
+        } else {
+            // 未开启
+            // 发送消息完成后，延迟4秒进行处理
+//            handler.sendMessageDelayed(msg,4000);
+            handler.sendEmptyMessageDelayed(ENTER_HOME, 4000);
+        }
+
 
     }
 
