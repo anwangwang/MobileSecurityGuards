@@ -41,4 +41,36 @@ public class SpUtil {
         }
         return sp.getBoolean(key, defValue);
     }
+
+
+    /**
+     * 写入string类型的变量至sp中
+     *
+     * @param ctx   上下文
+     * @param key   存储节点名称
+     * @param value 节点值
+     */
+    public static void putString(Context ctx, String key, String value) {
+
+        if (sp == null) {
+            sp = ctx.getSharedPreferences("config", Context.MODE_PRIVATE);
+        }
+        SharedPreferences.Editor edit = sp.edit();
+        edit.putString(key, value).commit();
+    }
+
+    /**
+     * 获取string类型的变量从sp中
+     *
+     * @param ctx      上下文
+     * @param key      存储节点名称
+     * @param defValue 默认节点值
+     */
+    public static String getString(Context ctx, String key, String defValue) {
+
+        if (sp == null) {
+            sp = ctx.getSharedPreferences("config", Context.MODE_PRIVATE);
+        }
+        return sp.getString(key, defValue);
+    }
 }

@@ -21,12 +21,5 @@
         mobilesafe:desOn="自动更新已开启"
         mobilesafe:desTitle="自动更新设置" />
 
-    <com.awwhome.mobilesecurityguards.widget.SettingItemView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        mobilesafe:desOff="自动更新已关闭"
-        mobilesafe:desOn="自动更新已开启"
-        mobilesafe:desTitle="电话归属地的显示设置" />
-
 
 </LinearLayout>

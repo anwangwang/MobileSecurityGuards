@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.awwhome.mobilesecurityguards.R;
+import com.awwhome.mobilesecurityguards.utils.ConstantValue;
+import com.awwhome.mobilesecurityguards.utils.SpUtil;
 
 /**
  * Created by awwho on 2017/3/29.
@@ -47,7 +50,9 @@ public class HomeActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
-                    case 0: // 点击安全卫士
+                    case 0: // 点击手机防盗
+                        // 弹出对话框
+                        showDialog();
                         break;
                     case 8:// 点击设置中心
                         Intent intent = new Intent(HomeActivity.this, SettingActivity.class);
@@ -56,6 +61,35 @@ public class HomeActivity extends Activity {
                 }
             }
         });
+    }
+
+    /**
+     * 弹出对话框
+     */
+    private void showDialog() {
+        // 根据是否设置(保存)过密码，来弹出不同的对话框
+        String modile_safe_psd = SpUtil.getString(this, ConstantValue.MODILE_SAFE_PSD, "");
+        if (TextUtils.isEmpty(modile_safe_psd)) {
+            // 保存密码
+            savePsdDialog();
+        } else {
+            // 设置密码
+            setPsdDialog();
+        }
+
+    }
+
+    /**
+     * 设置密码对话框
+     */
+    private void setPsdDialog() {
+    }
+
+    /**
+     * 保存密码对话框
+     */
+    private void savePsdDialog() {
+
     }
 
     /**
