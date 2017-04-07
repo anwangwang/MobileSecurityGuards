@@ -1,6 +1,7 @@
 package com.awwhome.mobilesecurityguards.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -70,26 +71,32 @@ public class HomeActivity extends Activity {
         // 根据是否设置(保存)过密码，来弹出不同的对话框
         String modile_safe_psd = SpUtil.getString(this, ConstantValue.MODILE_SAFE_PSD, "");
         if (TextUtils.isEmpty(modile_safe_psd)) {
-            // 保存密码
-            savePsdDialog();
-        } else {
             // 设置密码
-            setPsdDialog();
+            showSetPsdDialog();
+        } else {
+            // 确认密码
+            showConfirmPsdDialog();
         }
 
     }
 
     /**
-     * 设置密码对话框
+     * 确认密码对话框
      */
-    private void setPsdDialog() {
+    private void showConfirmPsdDialog() {
     }
 
     /**
-     * 保存密码对话框
+     * 设置密码对话框
      */
-    private void savePsdDialog() {
-
+    private void showSetPsdDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog dialog = builder.create();
+        // 将xml布局转化为View对象
+        View view = View.inflate(this, R.layout.dialog_set_psd, null);
+        // 设置自定义弹出框
+        dialog.setView(view);
+        dialog.show();
     }
 
     /**
