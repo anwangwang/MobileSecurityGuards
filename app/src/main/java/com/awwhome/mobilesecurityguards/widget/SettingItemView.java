@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.awwhome.mobilesecurityguards.R;
+import com.awwhome.mobilesecurityguards.utils.ConstantValue;
 
 /**
  * 设置中心条目View
@@ -18,6 +19,9 @@ public class SettingItemView extends RelativeLayout {
     private CheckBox cb_box;
     private TextView tv_title;
     private TextView tv_desc;
+    private String desOff;
+    private String desOn;
+    private String desTitle;
 
     public SettingItemView(Context context) {
         this(context, null);
@@ -32,13 +36,30 @@ public class SettingItemView extends RelativeLayout {
 
         // 将布局文件转化为View对象
         // 第三个参数，需要将布局文件挂载到当前SettingItemView布局中
-        View view = View.inflate(context, R.layout.setting_item_view, this);
-
+        View.inflate(context, R.layout.setting_item_view, this);
+       /* View view = View.inflate(context, R.layout.setting_item_view, null);
+        this.addView(view);*/
         // findViewById 这里可以直接使用findViewById获取控件，
         // 是因为已经将布局setting_item_view挂载到了当前的SettingItemView布局中
         tv_title = (TextView) findViewById(R.id.tv_title);
         tv_desc = (TextView) findViewById(R.id.tv_desc);
         cb_box = (CheckBox) findViewById(R.id.cb_box);
+
+        initAttrs(attrs);
+        // 将自定义属性的值获取到以后赋值给控件
+        tv_title.setText(desTitle);
+    }
+
+    /**
+     * 初始化属性集合
+     *
+     * @param attrs 构造方法中维护好的属性集合（自定义属性的集合）
+     */
+    private void initAttrs(AttributeSet attrs) {
+
+        desOff = attrs.getAttributeValue(ConstantValue.NAMESPACE, "desOff");
+        desOn = attrs.getAttributeValue(ConstantValue.NAMESPACE, "desOn");
+        desTitle = attrs.getAttributeValue(ConstantValue.NAMESPACE, "desTitle");
 
     }
 
@@ -64,10 +85,12 @@ public class SettingItemView extends RelativeLayout {
 
         if (isCheck) {
             // 选中
-            tv_desc.setText("自动更新已开启");
+//            tv_desc.setText("自动更新已开启");
+            tv_desc.setText(desOn);
         } else {
             // 未选中
-            tv_desc.setText("自动更新已关闭");
+//            tv_desc.setText("自动更新已关闭");
+            tv_desc.setText(desOff);
         }
     }
 
