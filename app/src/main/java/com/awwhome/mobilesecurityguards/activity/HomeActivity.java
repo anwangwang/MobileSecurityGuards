@@ -176,10 +176,11 @@ public class HomeActivity extends Activity {
     }
 
     /**
-     * 跳转到手机防盗Activity
+     * 跳转到手机防盗列表Activity
      */
     private void startMobileSafeActivity() {
-        Intent intent = new Intent(getApplicationContext(), TestActivity.class);
+//        Intent intent = new Intent(getApplicationContext(), TestActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SetupOverActivity.class);
         startActivity(intent);
         // 开启新的Activity之后，关闭当前对话框
         dialog.dismiss();

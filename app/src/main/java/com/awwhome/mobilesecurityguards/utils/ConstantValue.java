@@ -10,6 +10,19 @@ public class ConstantValue {
      * 是否开启自动更新的key
      */
     public static final String OPEN_UPDATE = "open_update";
+
+    /**
+     * 命名空间key
+     */
     public static final String NAMESPACE = "http://schemas.android.com/apk/res-auto";
+
+    /**
+     * 手机防盗密码KEY
+     */
     public static final String MODILE_SAFE_PSD = "modile_safe_psd";
+
+    /**
+     * 手机防盗设置完成key
+     */
+    public static final String SETUP_OVER = "setup_over";
 }
