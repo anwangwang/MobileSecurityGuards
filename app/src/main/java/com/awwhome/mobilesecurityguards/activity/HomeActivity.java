@@ -89,7 +89,44 @@ public class HomeActivity extends Activity {
      * 确认密码对话框
      */
     private void showConfirmPsdDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        dialog = builder.create();
+        // 将xml布局转化为View对象
+        View view = View.inflate(this, R.layout.dialog_confirm_psd, null);
+        // 设置自定义弹出框
+        dialog.setView(view);
+        dialog.show();
 
+        Button btn_confirm = (Button) view.findViewById(R.id.btn_confirm);
+        Button btn_cancel = (Button) view.findViewById(R.id.btn_cancel);
+        final EditText et_confirm_psd = (EditText) view.findViewById(R.id.et_confirm_psd);
+
+        btn_confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String confirmPsd = et_confirm_psd.getText().toString();
+                Log.d(TAG, "showSetPsdDialog:confirmPsd：" + confirmPsd);
+                if (!TextUtils.isEmpty(confirmPsd)) {
+                    String psd = SpUtil.getString(getApplicationContext(), ConstantValue.MODILE_SAFE_PSD, "");
+                    if (psd.equals(confirmPsd)) {
+                        // 跳转到手机防盗的Activity
+                        startMobileSafeActivity();
+                    } else {
+                        ToastUtil.showLong(getApplicationContext(), "确认密码错误，请重新输入！");
+                    }
+                } else {
+                    ToastUtil.showLong(getApplicationContext(), "密码不能为空！");
+                }
+            }
+        });
+
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 点击取消，隐藏当前的dialog
+                dialog.dismiss();
+            }
+        });
     }
 
     /**
