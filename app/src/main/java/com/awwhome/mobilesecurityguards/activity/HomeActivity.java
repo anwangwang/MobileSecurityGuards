@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 import com.awwhome.mobilesecurityguards.R;
 import com.awwhome.mobilesecurityguards.utils.ConstantValue;
 import com.awwhome.mobilesecurityguards.utils.SpUtil;
+import com.awwhome.mobilesecurityguards.utils.ToastUtil;
 
 /**
  * Created by awwho on 2017/3/29.
@@ -29,6 +32,7 @@ public class HomeActivity extends Activity {
     private GridView gv_home;
     private int[] titleIcons;
     private String[] titleStrs;
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +73,7 @@ public class HomeActivity extends Activity {
      */
     private void showDialog() {
         // 根据是否设置(保存)过密码，来弹出不同的对话框
+        // 对话框是依赖于Activity存在的，所以上下文环境为当前对话框所在的Activity
         String modile_safe_psd = SpUtil.getString(this, ConstantValue.MODILE_SAFE_PSD, "");
         if (TextUtils.isEmpty(modile_safe_psd)) {
             // 设置密码
@@ -84,6 +89,7 @@ public class HomeActivity extends Activity {
      * 确认密码对话框
      */
     private void showConfirmPsdDialog() {
+
     }
 
     /**
@@ -91,12 +97,55 @@ public class HomeActivity extends Activity {
      */
     private void showSetPsdDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        AlertDialog dialog = builder.create();
+        dialog = builder.create();
         // 将xml布局转化为View对象
         View view = View.inflate(this, R.layout.dialog_set_psd, null);
         // 设置自定义弹出框
         dialog.setView(view);
         dialog.show();
+
+        Button btn_confirm = (Button) view.findViewById(R.id.btn_confirm);
+        Button btn_cancel = (Button) view.findViewById(R.id.btn_cancel);
+        final EditText et_set_psd = (EditText) view.findViewById(R.id.et_set_psd);
+        final EditText et_confirm_psd = (EditText) view.findViewById(R.id.et_confirm_psd);
+
+        btn_confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String setPsd = et_set_psd.getText().toString();
+                String confirmPsd = et_confirm_psd.getText().toString();
+                Log.d(TAG, "showSetPsdDialog: setPsd：" + setPsd + ",confirmPsd：" + confirmPsd);
+                if (!TextUtils.isEmpty(setPsd) && !TextUtils.isEmpty(confirmPsd)) {
+                    if (setPsd.equals(confirmPsd)) {
+                        SpUtil.putString(getApplicationContext(), ConstantValue.MODILE_SAFE_PSD, setPsd);
+                        // 跳转到手机防盗的Activity
+                        startMobileSafeActivity();
+                    } else {
+                        ToastUtil.showLong(getApplicationContext(), "确认密码错误，请重新输入！");
+                    }
+                } else {
+                    ToastUtil.showLong(getApplicationContext(), "密码不能为空！");
+                }
+            }
+        });
+
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 点击取消，隐藏当前的dialog
+                dialog.dismiss();
+            }
+        });
+    }
+
+    /**
+     * 跳转到手机防盗Activity
+     */
+    private void startMobileSafeActivity() {
+        Intent intent = new Intent(getApplicationContext(), TestActivity.class);
+        startActivity(intent);
+        // 开启新的Activity之后，关闭当前对话框
+        dialog.dismiss();
     }
 
     /**
