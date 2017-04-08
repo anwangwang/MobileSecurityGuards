@@ -196,8 +196,8 @@ public class HomeActivity extends Activity {
                 "流量统计", "手机杀毒", "缓存清理", "高级工具", "设置中心"};
 
         titleIcons = new int[]{
-                R.mipmap.safe, R.mipmap.callmsgsafe, R.mipmap.app, R.mipmap.taskmanager, R.mipmap.netmanager,
-                R.mipmap.trojan, R.mipmap.sysoptimize, R.mipmap.atools, R.mipmap.settings
+                R.drawable.safe, R.drawable.callmsgsafe, R.drawable.app, R.drawable.taskmanager, R.drawable.netmanager,
+                R.drawable.trojan, R.drawable.sysoptimize, R.drawable.atools, R.drawable.settings
         };
 
         gv_home.setAdapter(new MyAdapter());
