@@ -98,6 +98,7 @@ public class Setup2Activity extends Activity {
      */
     public void nextPage(View view) {
 
+        // 根据SIM序列号决定跳转页面
         String sim_number = SpUtil.getString(getApplicationContext(), ConstantValue.SIM_NUMBER, "");
         if (!TextUtils.isEmpty(sim_number)) {
             Intent intent = new Intent(getApplicationContext(), Setup3Activity.class);
