@@ -1,6 +1,7 @@
 package com.awwhome.mobilesecurityguards.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -34,7 +35,8 @@ public class Setup2Activity extends Activity {
      * @param view
      */
     public void nextPage(View view) {
-
+        Intent intent = new Intent(getApplicationContext(), Setup3Activity.class);
+        startActivity(intent);
     }
 
 }

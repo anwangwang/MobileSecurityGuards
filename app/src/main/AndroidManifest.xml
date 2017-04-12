@@ -25,6 +25,7 @@
         <activity android:name=".activity.SetupOverActivity" />
         <activity android:name=".activity.Setup1Activity" />
         <activity android:name=".activity.Setup2Activity" />
+        <activity android:name=".activity.Setup3Activity" />
     </application>
 
 </manifest>
