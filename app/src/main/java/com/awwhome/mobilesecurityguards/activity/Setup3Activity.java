@@ -27,7 +27,9 @@ public class Setup3Activity extends Activity {
      * @param view
      */
     public void prePage(View view) {
-
+        Intent intent = new Intent(getApplicationContext(), Setup2Activity.class);
+        startActivity(intent);
+        finish();
     }
 
     /**
@@ -38,6 +40,7 @@ public class Setup3Activity extends Activity {
     public void nextPage(View view) {
         Intent intent = new Intent(getApplicationContext(), Setup4Activity.class);
         startActivity(intent);
+        finish();
     }
 
 }

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.awwhome.mobilesecurityguards.R;
+import com.awwhome.mobilesecurityguards.utils.ConstantValue;
+import com.awwhome.mobilesecurityguards.utils.SpUtil;
 
 /**
  * Created by awwho on 2017/4/12.
@@ -25,7 +27,9 @@ public class Setup4Activity extends Activity {
      * @param view
      */
     public void prePage(View view) {
-
+        Intent intent = new Intent(getApplicationContext(), Setup3Activity.class);
+        startActivity(intent);
+        finish();
     }
 
     /**
@@ -34,7 +38,9 @@ public class Setup4Activity extends Activity {
      * @param view
      */
     public void nextPage(View view) {
-        Intent intent = new Intent(getApplicationContext(), Setup4Activity.class);
+        Intent intent = new Intent(getApplicationContext(), SetupOverActivity.class);
         startActivity(intent);
+        finish();
+        SpUtil.putBoolean(this, ConstantValue.SETUP_OVER, true);
     }
 }
