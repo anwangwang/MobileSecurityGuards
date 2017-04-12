@@ -73,4 +73,18 @@ public class SpUtil {
         }
         return sp.getString(key, defValue);
     }
+
+    /**
+     * 移除Sp中的节点
+     *
+     * @param ctx 上下文
+     * @param key 节点KEY
+     */
+    public static void remove(Context ctx, String key) {
+        if (sp == null) {
+            sp = ctx.getSharedPreferences("config", Context.MODE_PRIVATE);
+        }
+        SharedPreferences.Editor edit = sp.edit();
+        edit.remove(key).commit();
+    }
 }

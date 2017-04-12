@@ -76,7 +76,7 @@ public class SettingItemView extends RelativeLayout {
     /**
      * 设置选中状态
      *
-     * @param isCheck 是否作为开启的变量，由点击过程去做传递
+     * @param isCheck 作为是否开启的变量，由点击过程去做传递
      */
     public void setCheck(boolean isCheck) {
 
