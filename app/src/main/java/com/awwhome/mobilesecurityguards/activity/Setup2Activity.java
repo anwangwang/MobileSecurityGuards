@@ -12,6 +12,7 @@ import android.view.View;
 import com.awwhome.mobilesecurityguards.R;
 import com.awwhome.mobilesecurityguards.utils.ConstantValue;
 import com.awwhome.mobilesecurityguards.utils.SpUtil;
+import com.awwhome.mobilesecurityguards.utils.ToastUtil;
 import com.awwhome.mobilesecurityguards.widget.SettingItemView;
 
 /**
@@ -96,9 +97,16 @@ public class Setup2Activity extends Activity {
      * @param view
      */
     public void nextPage(View view) {
-        Intent intent = new Intent(getApplicationContext(), Setup3Activity.class);
-        startActivity(intent);
-        finish();
+
+        String sim_number = SpUtil.getString(getApplicationContext(), ConstantValue.SIM_NUMBER, "");
+        if (!TextUtils.isEmpty(sim_number)) {
+            Intent intent = new Intent(getApplicationContext(), Setup3Activity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            ToastUtil.showLong(this, "请绑定SIM卡");
+        }
+
     }
 
 }
