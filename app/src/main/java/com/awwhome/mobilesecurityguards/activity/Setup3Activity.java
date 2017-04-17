@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.awwhome.mobilesecurityguards.R;
+import com.awwhome.mobilesecurityguards.utils.ConstantValue;
+import com.awwhome.mobilesecurityguards.utils.SpUtil;
+import com.awwhome.mobilesecurityguards.utils.ToastUtil;
 
 /**
  * 第三个设置Activity
@@ -49,6 +52,10 @@ public class Setup3Activity extends Activity {
     private void initView() {
         et_safe_number = (EditText) findViewById(R.id.et_safe_number);
         btn_select_contacts = (Button) findViewById(R.id.btn_select_contacts);
+
+        // 回显联系人
+        String phone = SpUtil.getString(getApplicationContext(), ConstantValue.CONTACT_PHONE, "");
+        et_safe_number.setText(phone);
     }
 
 
@@ -69,9 +76,17 @@ public class Setup3Activity extends Activity {
      * @param view
      */
     public void nextPage(View view) {
-        Intent intent = new Intent(getApplicationContext(), Setup4Activity.class);
-        startActivity(intent);
-        finish();
+
+        String phone = et_safe_number.getText().toString();
+        if (!TextUtils.isEmpty(phone)) {
+            Intent intent = new Intent(getApplicationContext(), Setup4Activity.class);
+            startActivity(intent);
+            finish();
+            // 如果是用户手动输入的，再次存储到SP中
+            SpUtil.putString(getApplicationContext(), ConstantValue.CONTACT_PHONE, phone);
+        } else {
+            ToastUtil.showLong(this, "请输入电话号码");
+        }
     }
 
     @Override
@@ -83,6 +98,9 @@ public class Setup3Activity extends Activity {
             // 将电话号码去除特殊字符
             phone = phone.replace("-", "").replace(" ", "").trim();
             et_safe_number.setText(phone);
+
+            // 存储联系人至SP中
+            SpUtil.putString(getApplicationContext(), ConstantValue.CONTACT_PHONE, phone);
         }
 
     }
