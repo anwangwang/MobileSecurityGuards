@@ -40,4 +40,9 @@ public class ConstantValue {
      * 联系人号码
      */
     public static final String CONTACT_PHONE = "contact_phone";
+
+    /**
+     * 是否开启安全防护,总开关
+     */
+    public static final String OPEN_SECURITY = "open_security";
 }
