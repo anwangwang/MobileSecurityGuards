@@ -2,6 +2,7 @@ package com.awwhome.mobilesecurityguards.activity;
 
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,8 +12,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -31,13 +32,14 @@ public class ContactListActivity extends Activity {
 
     private ListView lv_contacts;
     private ArrayList<HashMap<String, String>> contactList = new ArrayList<>();
+    private MyAdapter mAdapter;
     private Handler mHandler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            MyAdapter myAdapter = new MyAdapter();
-            lv_contacts.setAdapter(myAdapter);
+            mAdapter = new MyAdapter();
+            lv_contacts.setAdapter(mAdapter);
         }
     };
 
@@ -120,6 +122,24 @@ public class ContactListActivity extends Activity {
     private void initView() {
 
         lv_contacts = (ListView) findViewById(R.id.lv_contacts);
+
+        lv_contacts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                // 1.根据索引获取点击处的数据集合
+                HashMap<String, String> map = mAdapter.getItem(position);
+                // 2.从集合中获取电话号码
+                String phone = map.get("phone");
+                // 3.返回给第三个界面
+                Intent intent = new Intent();
+                intent.putExtra("phone", phone);
+                setResult(0, intent);
+                // 4.关闭此Activity
+                finish();
+
+            }
+        });
     }
 
     /**

@@ -3,6 +3,7 @@ package com.awwhome.mobilesecurityguards.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -73,4 +74,16 @@ public class Setup3Activity extends Activity {
         finish();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (data != null) {
+            String phone = data.getStringExtra("phone");
+            // 将电话号码去除特殊字符
+            phone = phone.replace("-", "").replace(" ", "").trim();
+            et_safe_number.setText(phone);
+        }
+
+    }
 }
