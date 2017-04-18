@@ -68,6 +68,10 @@ public class Setup3Activity extends Activity {
         Intent intent = new Intent(getApplicationContext(), Setup2Activity.class);
         startActivity(intent);
         finish();
+
+        // 开启平移动画
+        overridePendingTransition(R.anim.pre_in_anim, R.anim.pre_out_anim);
+
     }
 
     /**
@@ -84,6 +88,8 @@ public class Setup3Activity extends Activity {
             finish();
             // 如果是用户手动输入的，再次存储到SP中
             SpUtil.putString(getApplicationContext(), ConstantValue.CONTACT_PHONE, phone);
+            // 开启平移动画
+            overridePendingTransition(R.anim.next_in_anim, R.anim.next_out_anim);
         } else {
             ToastUtil.showLong(this, "请输入电话号码");
         }

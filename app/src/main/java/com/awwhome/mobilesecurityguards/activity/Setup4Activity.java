@@ -79,6 +79,10 @@ public class Setup4Activity extends Activity {
         Intent intent = new Intent(getApplicationContext(), Setup3Activity.class);
         startActivity(intent);
         finish();
+
+        // 开启平移动画
+        overridePendingTransition(R.anim.pre_in_anim, R.anim.pre_out_anim);
+
     }
 
     /**
@@ -95,6 +99,8 @@ public class Setup4Activity extends Activity {
             startActivity(intent);
             finish();
             SpUtil.putBoolean(this, ConstantValue.SETUP_OVER, true);
+            // 开启平移动画
+            overridePendingTransition(R.anim.next_in_anim, R.anim.next_out_anim);
         } else {
             ToastUtil.showShort(getApplicationContext(), "请开启安全设置");
         }
