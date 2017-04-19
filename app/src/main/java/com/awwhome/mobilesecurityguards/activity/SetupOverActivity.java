@@ -3,6 +3,9 @@ package com.awwhome.mobilesecurityguards.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import com.awwhome.mobilesecurityguards.R;
 import com.awwhome.mobilesecurityguards.utils.ConstantValue;
@@ -14,6 +17,11 @@ import com.awwhome.mobilesecurityguards.utils.SpUtil;
  */
 public class SetupOverActivity extends BaseActivity {
 
+    private static final String TAG = "SetupOverActivity";
+
+    private TextView tv_reset_setup;
+    private TextView tv_phone;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +31,8 @@ public class SetupOverActivity extends BaseActivity {
         if (setup_over) {
             // 如果设置已经完成，就停留在此Activity
             setContentView(R.layout.activity_setup_over);
+            initView();
+            initData();
         } else {
             // 如果设置未完成，跳转到第一个设置Activity
             Intent intent = new Intent(this, Setup1Activity.class);
@@ -40,6 +50,15 @@ public class SetupOverActivity extends BaseActivity {
     @Override
     protected void initView() {
 
+        tv_phone = (TextView) findViewById(R.id.tv_phone);
+        tv_reset_setup = (TextView) findViewById(R.id.tv_reset_setup);
+
+        tv_reset_setup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override
@@ -51,4 +70,5 @@ public class SetupOverActivity extends BaseActivity {
     protected void showPrePage() {
 
     }
+
 }
