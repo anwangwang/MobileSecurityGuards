@@ -39,6 +39,7 @@
         <activity android:name=".activity.Setup4Activity" />
         <activity android:name=".activity.ContactListActivity" />
         <activity android:name=".activity.AdvancedToolsActivity" />
+        <activity android:name=".activity.QueryPhoneAddressActivity" />
         <!-- activity end -->
 
         <!-- receiver start -->
