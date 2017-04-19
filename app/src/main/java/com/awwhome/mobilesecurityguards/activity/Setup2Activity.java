@@ -19,7 +19,7 @@ import com.awwhome.mobilesecurityguards.widget.SettingItemView;
  * 第二个设置Activity
  * Created by awwho on 2017/4/12.
  */
-public class Setup2Activity extends Activity {
+public class Setup2Activity extends BaseActivity {
 
     private static final String TAG = "Setup2Activity";
 
@@ -35,11 +35,8 @@ public class Setup2Activity extends Activity {
         initData();
     }
 
-    /**
-     * 初始化数据
-     */
-    private void initData() {
-
+    @Override
+    protected void initData() {
         // 数据回显
         String sim_number = SpUtil.getString(getApplicationContext(), ConstantValue.SIM_NUMBER, "");
         if (TextUtils.isEmpty(sim_number)) {
@@ -71,36 +68,23 @@ public class Setup2Activity extends Activity {
         });
     }
 
-    /**
-     * 初始化UI
-     */
-    private void initView() {
+    @Override
+    protected void initView() {
         siv_sim_bound = (SettingItemView) findViewById(R.id.siv_sim_bound);
     }
 
-
-    /**
-     * 上一页
-     *
-     * @param view
-     */
-    public void prePage(View view) {
+    @Override
+    protected void showPrePage() {
         Intent intent = new Intent(getApplicationContext(), Setup1Activity.class);
         startActivity(intent);
         finish();
 
         // 开启平移动画
         overridePendingTransition(R.anim.pre_in_anim, R.anim.pre_out_anim);
-
     }
 
-    /**
-     * 下一页
-     *
-     * @param view
-     */
-    public void nextPage(View view) {
-
+    @Override
+    protected void showNextPage() {
         // 根据SIM序列号决定跳转页面
         String sim_number = SpUtil.getString(getApplicationContext(), ConstantValue.SIM_NUMBER, "");
         if (!TextUtils.isEmpty(sim_number)) {
@@ -112,7 +96,6 @@ public class Setup2Activity extends Activity {
         } else {
             ToastUtil.showLong(this, "请绑定SIM卡");
         }
-
 
     }
 

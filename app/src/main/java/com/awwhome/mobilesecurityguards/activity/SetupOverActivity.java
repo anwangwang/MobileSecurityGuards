@@ -12,7 +12,7 @@ import com.awwhome.mobilesecurityguards.utils.SpUtil;
  * 手机防盗设置完成Activity
  * Created by awwho on 2017/4/8.
  */
-public class SetupOverActivity extends Activity {
+public class SetupOverActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +29,26 @@ public class SetupOverActivity extends Activity {
             startActivity(intent);
             finish();
         }
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void showNextPage() {
+
+    }
+
+    @Override
+    protected void showPrePage() {
 
     }
 }

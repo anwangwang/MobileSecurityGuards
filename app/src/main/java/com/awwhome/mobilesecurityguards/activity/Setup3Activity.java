@@ -17,7 +17,7 @@ import com.awwhome.mobilesecurityguards.utils.ToastUtil;
  * 第三个设置Activity
  * Created by awwho on 2017/4/12.
  */
-public class Setup3Activity extends Activity {
+public class Setup3Activity extends BaseActivity {
 
     private EditText et_safe_number;
     private Button btn_select_contacts;
@@ -31,10 +31,8 @@ public class Setup3Activity extends Activity {
         initData();
     }
 
-    /**
-     * 初始化数据
-     */
-    private void initData() {
+    @Override
+    protected void initData() {
         btn_select_contacts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,10 +44,8 @@ public class Setup3Activity extends Activity {
         });
     }
 
-    /**
-     * 初始化控件
-     */
-    private void initView() {
+    @Override
+    protected void initView() {
         et_safe_number = (EditText) findViewById(R.id.et_safe_number);
         btn_select_contacts = (Button) findViewById(R.id.btn_select_contacts);
 
@@ -58,29 +54,18 @@ public class Setup3Activity extends Activity {
         et_safe_number.setText(phone);
     }
 
-
-    /**
-     * 上一页
-     *
-     * @param view
-     */
-    public void prePage(View view) {
+    @Override
+    protected void showPrePage() {
         Intent intent = new Intent(getApplicationContext(), Setup2Activity.class);
         startActivity(intent);
         finish();
 
         // 开启平移动画
         overridePendingTransition(R.anim.pre_in_anim, R.anim.pre_out_anim);
-
     }
 
-    /**
-     * 下一页
-     *
-     * @param view
-     */
-    public void nextPage(View view) {
-
+    @Override
+    protected void showNextPage() {
         String phone = et_safe_number.getText().toString();
         if (!TextUtils.isEmpty(phone)) {
             Intent intent = new Intent(getApplicationContext(), Setup4Activity.class);

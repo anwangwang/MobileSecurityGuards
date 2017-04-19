@@ -17,7 +17,7 @@ import com.awwhome.mobilesecurityguards.utils.ToastUtil;
  * 第四个设置Activity
  * Created by awwho on 2017/4/12.
  */
-public class Setup4Activity extends Activity {
+public class Setup4Activity extends BaseActivity {
 
     private CheckBox cb_box;
 
@@ -31,17 +31,13 @@ public class Setup4Activity extends Activity {
         initData();
     }
 
-    /**
-     * 初始化数据
-     */
-    private void initData() {
+    @Override
+    protected void initData() {
+
     }
 
-    /**
-     * 初始化UI
-     */
-    private void initView() {
-
+    @Override
+    protected void initView() {
         cb_box = (CheckBox) findViewById(R.id.cb_box);
 
         // 1.是否选中状态的回显过程
@@ -67,31 +63,20 @@ public class Setup4Activity extends Activity {
 
             }
         });
-
     }
 
-    /**
-     * 上一页
-     *
-     * @param view
-     */
-    public void prePage(View view) {
+    @Override
+    protected void showPrePage() {
         Intent intent = new Intent(getApplicationContext(), Setup3Activity.class);
         startActivity(intent);
         finish();
 
         // 开启平移动画
         overridePendingTransition(R.anim.pre_in_anim, R.anim.pre_out_anim);
-
     }
 
-    /**
-     * 下一页
-     *
-     * @param view
-     */
-    public void nextPage(View view) {
-
+    @Override
+    protected void showNextPage() {
         // 根据sp中的总开关是否开启决定跳转页面
         boolean open_security = SpUtil.getBoolean(getApplicationContext(), ConstantValue.OPEN_SECURITY, false);
         if (open_security) {
