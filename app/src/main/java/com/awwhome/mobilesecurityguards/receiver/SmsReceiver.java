@@ -8,6 +8,7 @@ import android.telephony.SmsMessage;
 import android.util.Log;
 
 import com.awwhome.mobilesecurityguards.R;
+import com.awwhome.mobilesecurityguards.service.LocationService;
 import com.awwhome.mobilesecurityguards.utils.ConstantValue;
 import com.awwhome.mobilesecurityguards.utils.SpUtil;
 
@@ -42,7 +43,13 @@ public class SmsReceiver extends BroadcastReceiver {
                     MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.ylzs);
                     mediaPlayer.setLooping(true);
                     mediaPlayer.start();
+                }
 
+                if (messageBody.contains("#*location*#")) {
+                    // 5.开启服务，获取经纬度
+                    Intent intent1 = new Intent(context, LocationService.class);
+                    // 广播接收者没有上下文环境，所以要用这种方式开启服务
+                    context.startService(intent1);
                 }
             }
         }
