@@ -59,6 +59,10 @@ public class HomeActivity extends Activity {
                         // 弹出对话框
                         showDialog();
                         break;
+                    case 7: // 点击高级工具
+                        // 跳转到高级工具页面
+                        showAdvancedTools();
+                        break;
                     case 8:// 点击设置中心
                         Intent intent = new Intent(HomeActivity.this, SettingActivity.class);
                         startActivity(intent);
@@ -66,6 +70,15 @@ public class HomeActivity extends Activity {
                 }
             }
         });
+    }
+
+    /**
+     * 跳转到高级工具Activity
+     */
+    private void showAdvancedTools() {
+
+        Intent intent = new Intent(this, AdvancedToolsActivity.class);
+        startActivity(intent);
     }
 
     /**
