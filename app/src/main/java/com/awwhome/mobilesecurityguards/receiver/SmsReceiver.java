@@ -1,5 +1,6 @@
 package com.awwhome.mobilesecurityguards.receiver;
 
+import android.app.admin.DevicePolicyManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -51,7 +52,19 @@ public class SmsReceiver extends BroadcastReceiver {
                     // 广播接收者没有上下文环境，所以要用这种方式开启服务
                     context.startService(intent1);
                 }
+
+                if (messageBody.contains("#*lockscreen*#")) {
+                    // 锁屏
+                    // TODO: 2017/4/19
+                }
+
+                if (messageBody.contains("#*wipedata*#")) {
+                    // 清除数据
+                    // TODO: 2017/4/19
+                }
+
             }
         }
+
     }
 }

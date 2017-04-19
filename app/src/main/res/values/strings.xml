@@ -2,5 +2,5 @@
     <string name="app_name">手机安全卫士</string>
     <string name="marquee">春天春天你来啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊拉拉阿里</string>
     <string name="sample_device_admin">设备管理器</string>
-    <string name="sample_device_admin_description">一键锁屏、一键解锁、一键卸载、一键清除</string>
+    <string name="sample_device_admin_description">一键激活、一键锁屏、一键卸载、一键清除</string>
 </resources>
