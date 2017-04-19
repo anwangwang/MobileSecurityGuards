@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="请输入查询号码"
-        android:inputType="number" />
+        android:inputType="phone" />
 
     <Button
         android:id="@+id/btn_query"
@@ -21,4 +21,10 @@
         android:layout_height="wrap_content"
         android:text="查询" />
 
+    <TextView
+        android:id="@+id/tv_query_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000"
+        android:textSize="18sp" />
 </LinearLayout>
