@@ -44,7 +44,8 @@ public class SetupOverActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+        String phone = SpUtil.getString(getApplicationContext(), ConstantValue.CONTACT_PHONE, "");
+        tv_phone.setText(phone);
     }
 
     @Override
@@ -56,7 +57,9 @@ public class SetupOverActivity extends BaseActivity {
         tv_reset_setup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(SetupOverActivity.this, Setup1Activity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
