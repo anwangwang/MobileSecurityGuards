@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -67,8 +70,15 @@ public class QueryPhoneAddressActivity extends Activity {
 
                 String phone = et_phone.getText().toString();
 
-                // 查询归属地
-                queryAddress(phone);
+                if (!TextUtils.isEmpty(phone)) {
+                    // 查询归属地
+                    queryAddress(phone);
+                } else {
+                    // 输入框抖动
+                    Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+                    et_phone.startAnimation(shake);
+                }
+
             }
         });
 
