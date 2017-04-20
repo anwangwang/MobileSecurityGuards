@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -57,6 +60,7 @@ public class QueryPhoneAddressActivity extends Activity {
         btn_query = (Button) findViewById(R.id.btn_query);
         tv_query_result = (TextView) findViewById(R.id.tv_query_result);
 
+        // 点击查询
         btn_query.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,6 +71,26 @@ public class QueryPhoneAddressActivity extends Activity {
                 queryAddress(phone);
             }
         });
+
+        // 实时查询
+        et_phone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String phone = et_phone.getText().toString();
+                queryAddress(phone);
+            }
+        });
+
     }
 
     /**
