@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -77,6 +78,14 @@ public class QueryPhoneAddressActivity extends Activity {
                     // 输入框抖动
                     Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
                     et_phone.startAnimation(shake);
+
+                    // 手机震动效果
+                    // 获取震动对象
+                    Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                    // 震动2秒钟
+                    vibrator.vibrate(2000);
+                    // 有规律的震动（震动规则（不震动间隔，震动间隔，不震动间隔，震动间隔...），重复次数（-1 or 次数））
+//                    vibrator.vibrate(new long[]{3000, 2000, 3000, 2000}, -1);
                 }
 
             }
