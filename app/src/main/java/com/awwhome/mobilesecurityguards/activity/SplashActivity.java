@@ -2,25 +2,19 @@ package com.awwhome.mobilesecurityguards.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.View;
 import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.awwhome.mobilesecurityguards.R;
 import com.awwhome.mobilesecurityguards.utils.ConstantValue;
@@ -35,11 +29,11 @@ import org.xutils.http.RequestParams;
 import org.xutils.x;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 
 /**
  * 启动页面
@@ -220,8 +214,62 @@ public class SplashActivity extends Activity {
 
         initView();
         initData();
-
         initAnimation();
+        initDB();
+    }
+
+    /**
+     * 初始化数据库
+     */
+    private void initDB() {
+        initAddressDB("naddress.db");
+    }
+
+    /**
+     * 初始化归属地数据库，将第三方资产库中的数据库文件拷贝到项目中
+     *
+     * @param dbName 数据库名称
+     */
+    private void initAddressDB(String dbName) {
+        // 1，获取项目目录
+//        getCacheDir(); // 获取缓存目录
+//        Environment.getExternalStorageDirectory(); // 获取SD卡目录
+        File filesDir = getFilesDir();
+        File file = new File(filesDir, dbName);
+        // 如果文件存在，不需要重新创建
+        if (file.exists()) {
+            return;
+        }
+        InputStream inputStream = null;
+        FileOutputStream fos = null;
+        // 2，读取第三方资产目录下面的文件
+        try {
+            inputStream = getAssets().open(dbName);
+            // 3,将读取的内容写入到指定文件夹的指定目录中去
+            fos = new FileOutputStream(file);
+
+            // 模板代码
+            byte[] bytes = new byte[1024];
+            int temp = -1;
+            while ((temp = inputStream.read(bytes)) != -1) {
+                fos.write(bytes, 0, temp);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+                if (fos != null) {
+                    fos.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     /**
