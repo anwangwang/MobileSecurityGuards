@@ -21,5 +21,13 @@
         mobilesafe:desOn="自动更新已开启"
         mobilesafe:desTitle="自动更新设置" />
 
+    <com.awwhome.mobilesecurityguards.widget.SettingItemView
+        android:id="@+id/siv_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        mobilesafe:desOff="归属地显示已关闭"
+        mobilesafe:desOn="归属地显示已开启"
+        mobilesafe:desTitle="电话归属地显示设置" />
+
 
 </LinearLayout>

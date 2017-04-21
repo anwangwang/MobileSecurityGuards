@@ -72,6 +72,7 @@
 
         <!-- server start -->
         <service android:name=".service.LocationService" />
+        <service android:name=".service.AddressService" />
         <!-- server end -->
 
         <!-- provider start -->
