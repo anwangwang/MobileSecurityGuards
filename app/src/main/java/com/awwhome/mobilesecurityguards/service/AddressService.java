@@ -15,6 +15,8 @@ import android.util.Log;
 public class AddressService extends Service {
 
     private static final String TAG = "AddressService";
+    private TelephonyManager telephonyManager;
+    private MyPhoneStateListener myPhoneStateListener;
 
     @Nullable
     @Override
@@ -28,29 +30,10 @@ public class AddressService extends Service {
         // 当服务第一次开启时，显示土司
         // 监听电话的状态，当电话处于响铃状态时，显示土司，处于空闲状态时，不显示土司
         // 1.获取电话管理者对象
-        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+        telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+        myPhoneStateListener = new MyPhoneStateListener();
         // 2.监听电话状态
-        telephonyManager.listen(new PhoneStateListener() {
-            @Override
-            public void onCallStateChanged(int state, String incomingNumber) {
-                super.onCallStateChanged(state, incomingNumber);
-                // 3.电话状态发生改变时，调用此方法
-                switch (state) {
-                    case TelephonyManager.CALL_STATE_IDLE:
-                        // 空闲状态，不显示土司
-                        Log.d(TAG, "onCallStateChanged: 空闲状态，土司不显示了。。。。");
-                        break;
-                    case TelephonyManager.CALL_STATE_OFFHOOK:
-                        // 摘机状态
-                        break;
-                    case TelephonyManager.CALL_STATE_RINGING:
-                        // 响铃状态，显示土司
-                        Log.d(TAG, "onCallStateChanged: 响铃状态，土司显示了。。。。。。");
-                        break;
-                }
-
-            }
-        }, PhoneStateListener.LISTEN_CALL_STATE);
+        telephonyManager.listen(myPhoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
 
     }
 
@@ -62,6 +45,31 @@ public class AddressService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        // 当服务关闭时，不显示土司
+        if (telephonyManager != null && myPhoneStateListener != null) {
+            // 当服务关闭时，取消对电话状态的监听
+            telephonyManager.listen(myPhoneStateListener, PhoneStateListener.LISTEN_NONE);
+        }
+    }
+
+    // 自定义PhoneStateListener，手动实现onCallStateChanged方法
+    class MyPhoneStateListener extends PhoneStateListener {
+        @Override
+        public void onCallStateChanged(int state, String incomingNumber) {
+            super.onCallStateChanged(state, incomingNumber);
+            // 3.电话状态发生改变时，调用此方法
+            switch (state) {
+                case TelephonyManager.CALL_STATE_IDLE:
+                    // 空闲状态，不显示土司
+                    Log.d(TAG, "onCallStateChanged: 空闲状态，土司不显示了。。。。");
+                    break;
+                case TelephonyManager.CALL_STATE_OFFHOOK:
+                    // 摘机状态
+                    break;
+                case TelephonyManager.CALL_STATE_RINGING:
+                    // 响铃状态，显示土司
+                    Log.d(TAG, "onCallStateChanged: 响铃状态，土司显示了。。。。。。");
+                    break;
+            }
+        }
     }
 }
