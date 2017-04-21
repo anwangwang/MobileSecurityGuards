@@ -8,6 +8,7 @@ import android.view.View;
 import com.awwhome.mobilesecurityguards.R;
 import com.awwhome.mobilesecurityguards.service.AddressService;
 import com.awwhome.mobilesecurityguards.utils.ConstantValue;
+import com.awwhome.mobilesecurityguards.utils.ServiceUtil;
 import com.awwhome.mobilesecurityguards.utils.SpUtil;
 import com.awwhome.mobilesecurityguards.widget.SettingItemView;
 
@@ -38,6 +39,12 @@ public class SettingActivity extends Activity {
     private void initAddress() {
         siv_address = (SettingItemView) findViewById(R.id.siv_address);
 
+        // 存储siv_address是否为选中状态
+        // 因为siv_address的逻辑都是在服务中运行的，所以如果存储在SP中，当手机内存不足时，有可能会杀死服务
+        // 导致服务关闭之后，siv_address依然显示已选中，出现ui与数据不同步的情况
+        // 监听服务是否在运行，根据服务是否运行来确定归属地显示是否开启
+        boolean isRunning = ServiceUtil.isRunning(this, "com.awwhome.mobilesecurityguards.service.AddressService");
+        siv_address.setCheck(isRunning);
         // 注册点击事件
         siv_address.setOnClickListener(new View.OnClickListener() {
             @Override
