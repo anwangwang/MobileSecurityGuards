@@ -2,11 +2,18 @@ package com.awwhome.mobilesecurityguards.service;
 
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.PixelFormat;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.Toast;
+
+import com.awwhome.mobilesecurityguards.R;
 
 /**
  * 归属地悬浮框显示服务
@@ -17,6 +24,10 @@ public class AddressService extends Service {
     private static final String TAG = "AddressService";
     private TelephonyManager telephonyManager;
     private MyPhoneStateListener myPhoneStateListener;
+
+    private final WindowManager.LayoutParams mParams = new WindowManager.LayoutParams();
+    private WindowManager windowManager;
+    private View toastView;
 
     @Nullable
     @Override
@@ -35,6 +46,8 @@ public class AddressService extends Service {
         // 2.监听电话状态
         telephonyManager.listen(myPhoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
 
+        // 获取窗口管理者对象
+        windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
     }
 
     @Override
@@ -61,6 +74,9 @@ public class AddressService extends Service {
                 case TelephonyManager.CALL_STATE_IDLE:
                     // 空闲状态，不显示土司
                     Log.d(TAG, "onCallStateChanged: 空闲状态，土司不显示了。。。。");
+                    if (windowManager != null && toastView != null) {
+                        windowManager.removeView(toastView);
+                    }
                     break;
                 case TelephonyManager.CALL_STATE_OFFHOOK:
                     // 摘机状态
@@ -68,8 +84,35 @@ public class AddressService extends Service {
                 case TelephonyManager.CALL_STATE_RINGING:
                     // 响铃状态，显示土司
                     Log.d(TAG, "onCallStateChanged: 响铃状态，土司显示了。。。。。。");
+                    showCustomToast();
                     break;
             }
         }
+    }
+
+    /**
+     * 显示自定义土司
+     */
+    private void showCustomToast() {
+
+//        Toast
+
+        // XXX This should be changed to use a Dialog, with a Theme.Toast
+        // defined that sets up the layout params appropriately.
+        final WindowManager.LayoutParams params = mParams;
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        params.format = PixelFormat.TRANSLUCENT;
+        // 在响铃的时候显示土司，和电话类型一致
+        params.type = WindowManager.LayoutParams.TYPE_PHONE;
+        params.setTitle("Toast");
+        params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+        // 指定土司的所在位置
+        params.gravity = Gravity.LEFT + Gravity.TOP;
+
+        // 将布局文件转化为View对象
+        toastView = View.inflate(this, R.layout.toast_view, null);
+        windowManager.addView(toastView, mParams);
     }
 }
