@@ -15,7 +15,12 @@ public class AddressDao {
     // 数据库访问路径
     private static String path = "data/data/com.awwhome.mobilesecurityguards/files/naddress.db";
 
-    // 用户输入一个电话号码，返回号码的归属地
+    /**
+     * 用户输入一个电话号码，返回号码的归属地
+     *
+     * @param phone 输入号码
+     * @return 归属地
+     */
     public static String getAddress(String phone) {
         if (phone.length() > 7) {
             phone = phone.substring(0, 7);

@@ -10,6 +10,7 @@ import com.awwhome.mobilesecurityguards.service.AddressService;
 import com.awwhome.mobilesecurityguards.utils.ConstantValue;
 import com.awwhome.mobilesecurityguards.utils.ServiceUtil;
 import com.awwhome.mobilesecurityguards.utils.SpUtil;
+import com.awwhome.mobilesecurityguards.widget.SettingClickView;
 import com.awwhome.mobilesecurityguards.widget.SettingItemView;
 
 /**
@@ -20,6 +21,7 @@ public class SettingActivity extends Activity {
 
     private SettingItemView siv_update;
     private SettingItemView siv_address;
+    private SettingClickView scv_toast_style;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,25 @@ public class SettingActivity extends Activity {
 //        initAddressView();
         initAddress();
 //        initData();
+
+        initToastStyle();
+    }
+
+    /**
+     * 初始化土司的样式
+     */
+    private void initToastStyle() {
+        scv_toast_style = (SettingClickView) findViewById(R.id.scv_toast_style);
+        scv_toast_style.setTitle("设置归属地显示风格");
+
+        // 创建描述文字所在的数组
+        String[] toastStyleDesc = new String[]{"透明", "橙色", "蓝色", "灰色", "绿色"};
+
+        // 获取存在SP中的索引值
+        int toast_style = SpUtil.getInt(getApplicationContext(), ConstantValue.TOAST_STYLE, 0);
+
+        // 设置描述内容
+        scv_toast_style.setDesc(toastStyleDesc[toast_style]);
     }
 
     /**

@@ -3,7 +3,9 @@ package com.awwhome.mobilesecurityguards.service;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.PixelFormat;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
@@ -11,9 +13,11 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.awwhome.mobilesecurityguards.R;
+import com.awwhome.mobilesecurityguards.engine.AddressDao;
 
 /**
  * 归属地悬浮框显示服务
@@ -28,6 +32,16 @@ public class AddressService extends Service {
     private final WindowManager.LayoutParams mParams = new WindowManager.LayoutParams();
     private WindowManager windowManager;
     private View toastView;
+    private String address;
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            // 更新UI
+            tv_address.setText(address);
+        }
+    };
+    private TextView tv_address;
 
     @Nullable
     @Override
@@ -84,7 +98,7 @@ public class AddressService extends Service {
                 case TelephonyManager.CALL_STATE_RINGING:
                     // 响铃状态，显示土司
                     Log.d(TAG, "onCallStateChanged: 响铃状态，土司显示了。。。。。。");
-                    showCustomToast();
+                    showCustomToast(incomingNumber);
                     break;
             }
         }
@@ -93,9 +107,9 @@ public class AddressService extends Service {
     /**
      * 显示自定义土司
      */
-    private void showCustomToast() {
+    private void showCustomToast(String incomingNumber) {
 
-//        Toast
+//        Toast.makeText()
 
         // XXX This should be changed to use a Dialog, with a Theme.Toast
         // defined that sets up the layout params appropriately.
@@ -113,6 +127,28 @@ public class AddressService extends Service {
 
         // 将布局文件转化为View对象
         toastView = View.inflate(this, R.layout.toast_view, null);
+        tv_address = (TextView) toastView.findViewById(R.id.tv_address);
         windowManager.addView(toastView, mParams);
+
+        // 查询号码归属地
+        queryAddress(incomingNumber);
+    }
+
+    /**
+     * 查询号码归属地
+     *
+     * @param incomingNumber 来电号码
+     */
+    private void queryAddress(final String incomingNumber) {
+
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                // 查询
+                address = AddressDao.getAddress(incomingNumber);
+                mHandler.sendEmptyMessage(0);
+            }
+        }.start();
     }
 }

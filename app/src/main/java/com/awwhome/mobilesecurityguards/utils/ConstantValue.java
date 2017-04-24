@@ -37,12 +37,17 @@ public class ConstantValue {
     public static final String SIM_NUMBER = "SIM_NUMBER";
 
     /**
-     * 联系人号码
+     * 联系人号码key
      */
     public static final String CONTACT_PHONE = "contact_phone";
 
     /**
-     * 是否开启安全防护,总开关
+     * 是否开启安全防护的Key,总开关
      */
     public static final String OPEN_SECURITY = "open_security";
+
+    /**
+     * 土司样式索引key
+     */
+    public static final String TOAST_STYLE = "toast_style";
 }

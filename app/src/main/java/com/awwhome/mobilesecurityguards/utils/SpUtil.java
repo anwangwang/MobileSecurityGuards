@@ -87,4 +87,35 @@ public class SpUtil {
         SharedPreferences.Editor edit = sp.edit();
         edit.remove(key).commit();
     }
+
+    /**
+     * 写入int类型的变量至sp中
+     *
+     * @param ctx   上下文
+     * @param key   存储节点名称
+     * @param value 节点值
+     */
+    public static void putInt(Context ctx, String key, int value) {
+
+        if (sp == null) {
+            sp = ctx.getSharedPreferences("config", Context.MODE_PRIVATE);
+        }
+        SharedPreferences.Editor edit = sp.edit();
+        edit.putInt(key, value).commit();
+    }
+
+    /**
+     * 获取int类型的变量从sp中
+     *
+     * @param ctx      上下文
+     * @param key      存储节点名称
+     * @param defValue 默认节点值
+     */
+    public static int getInt(Context ctx, String key, int defValue) {
+
+        if (sp == null) {
+            sp = ctx.getSharedPreferences("config", Context.MODE_PRIVATE);
+        }
+        return sp.getInt(key, defValue);
+    }
 }

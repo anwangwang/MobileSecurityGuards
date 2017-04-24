@@ -29,5 +29,10 @@
         mobilesafe:desOn="归属地显示已开启"
         mobilesafe:desTitle="电话归属地显示设置" />
 
+    <com.awwhome.mobilesecurityguards.widget.SettingClickView
+        android:id="@+id/scv_toast_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 
 </LinearLayout>
