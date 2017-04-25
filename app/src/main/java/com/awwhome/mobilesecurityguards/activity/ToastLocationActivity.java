@@ -61,6 +61,15 @@ public class ToastLocationActivity extends Activity {
         layoutParams.leftMargin = location_x;
         layoutParams.topMargin = location_y;
 
+        // 默认显示位置
+        if (location_y > mScreenHeight / 2) {
+            btn_top.setVisibility(View.VISIBLE);
+            btn_bottom.setVisibility(View.INVISIBLE);
+        } else {
+            btn_top.setVisibility(View.INVISIBLE);
+            btn_bottom.setVisibility(View.VISIBLE);
+        }
+
         // 将设置的规则作用在控件上
         iv_drag.setLayoutParams(layoutParams);
 
@@ -104,6 +113,7 @@ public class ToastLocationActivity extends Activity {
                         startY = (int) event.getRawY();
 
                         // 容错处理
+                        // TODO: 2017/4/25
                         // 左边缘不能移出屏幕
                         if (left < 0) {
                             break;
@@ -119,6 +129,15 @@ public class ToastLocationActivity extends Activity {
                         // 下边缘不能移出屏幕
                         if (bottom > mScreenHeight - 22) {
                             break;
+                        }
+
+                        // 描述文字的所在位置
+                        if (top > mScreenHeight / 2) {
+                            btn_top.setVisibility(View.VISIBLE);
+                            btn_bottom.setVisibility(View.INVISIBLE);
+                        } else {
+                            btn_top.setVisibility(View.INVISIBLE);
+                            btn_bottom.setVisibility(View.VISIBLE);
                         }
 
                         break;
