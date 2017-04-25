@@ -34,5 +34,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <com.awwhome.mobilesecurityguards.widget.SettingClickView
+        android:id="@+id/scv_toast_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 
 </LinearLayout>

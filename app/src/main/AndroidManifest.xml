@@ -42,6 +42,9 @@
         <activity android:name=".activity.ContactListActivity" />
         <activity android:name=".activity.AdvancedToolsActivity" />
         <activity android:name=".activity.QueryPhoneAddressActivity" />
+        <activity
+            android:name=".activity.ToastLocationActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- activity end -->
 
         <!-- receiver start -->
