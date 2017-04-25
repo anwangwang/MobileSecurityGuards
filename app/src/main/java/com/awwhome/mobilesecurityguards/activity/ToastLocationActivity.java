@@ -2,6 +2,7 @@ package com.awwhome.mobilesecurityguards.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -25,6 +26,7 @@ public class ToastLocationActivity extends Activity {
     private WindowManager mWM;
     private int mScreenHeight;
     private int mScreenWidth;
+    private long startTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +154,22 @@ public class ToastLocationActivity extends Activity {
                 // 在当前的情况下返回false，不响应事件
                 // 返回true，才会去相应事件
                 return true;
+            }
+        });
+
+        // 双击事件
+        iv_drag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (startTime != 0) {
+                    long endTime = System.currentTimeMillis();
+                    if (endTime - startTime < 500) {
+                        // 两次点击的时间戳少于500毫秒，就是双击
+                    }
+                }
+                startTime = System.currentTimeMillis();
+
             }
         });
     }
