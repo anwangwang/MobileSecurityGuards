@@ -4,10 +4,14 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.awwhome.mobilesecurityguards.R;
+import com.awwhome.mobilesecurityguards.utils.ConstantValue;
+import com.awwhome.mobilesecurityguards.utils.SpUtil;
 
 /**
  * 土司位置界面
@@ -18,6 +22,9 @@ public class ToastLocationActivity extends Activity {
     private ImageView iv_drag;
     private Button btn_top;
     private Button btn_bottom;
+    private WindowManager mWM;
+    private int mScreenHeight;
+    private int mScreenWidth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +42,27 @@ public class ToastLocationActivity extends Activity {
         iv_drag = (ImageView) findViewById(R.id.iv_drag);
         btn_top = (Button) findViewById(R.id.btn_top);
         btn_bottom = (Button) findViewById(R.id.btn_bottom);
+
+        int location_x = SpUtil.getInt(getApplicationContext(), ConstantValue.LOCATION_X, 0);
+        int location_y = SpUtil.getInt(getApplicationContext(), ConstantValue.LOCATION_Y, 0);
+
+        mWM = (WindowManager) getSystemService(WINDOW_SERVICE);
+        // 获取屏幕的宽高
+        mScreenHeight = mWM.getDefaultDisplay().getHeight();
+        mScreenWidth = mWM.getDefaultDisplay().getWidth();
+
+        // 左上角的坐标作用在iv_drag上
+        // ImageView在相对布局中，所以其所在的位置的规则需要由相对布局提供
+        // 指定宽高
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+
+        // 设置iv_drag的所在位置坐标
+        layoutParams.leftMargin = location_x;
+        layoutParams.topMargin = location_y;
+
+        // 将设置的规则作用在控件上
+        iv_drag.setLayoutParams(layoutParams);
 
         // 注册触摸事件
         iv_drag.setOnTouchListener(new View.OnTouchListener() {
@@ -71,13 +99,40 @@ public class ToastLocationActivity extends Activity {
                         // 告知移动的控件，按计算出来的坐标去展示
                         iv_drag.layout(left, top, right, bottom);
 
+                        // 重置一次其实起始坐标
+                        startX = (int) event.getRawX();
+                        startY = (int) event.getRawY();
+
                         // 容错处理
+                        // 左边缘不能移出屏幕
+                        if (left < 0) {
+                            break;
+                        }
+                        // 上边缘不能移出屏幕(可显示区域)
+                        if (top < 0) {
+                            break;
+                        }
+                        // 右边缘不能移出屏幕
+                        if (right > mScreenWidth) {
+                            break;
+                        }
+                        // 下边缘不能移出屏幕
+                        if (bottom > mScreenHeight - 22) {
+                            break;
+                        }
+
                         break;
                     case MotionEvent.ACTION_UP:
                         // 抬起
+                        // 存储移动到的位置
+                        SpUtil.putInt(getApplicationContext(), ConstantValue.LOCATION_X, iv_drag.getLeft());
+                        SpUtil.putInt(getApplicationContext(), ConstantValue.LOCATION_Y, iv_drag.getTop());
+
                         break;
                 }
-                return false;
+                // 在当前的情况下返回false，不响应事件
+                // 返回true，才会去相应事件
+                return true;
             }
         });
     }

@@ -50,4 +50,14 @@ public class ConstantValue {
      * 土司样式索引key
      */
     public static final String TOAST_STYLE = "toast_style";
+
+    /**
+     * 左上角X轴位置坐标KEY
+     */
+    public static final String LOCATION_X = "location_x";
+
+    /**
+     * 左上角Y轴位置坐标KEY
+     */
+    public static final String LOCATION_Y = "location_y";
 }
