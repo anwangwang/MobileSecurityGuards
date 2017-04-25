@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.awwhome.mobilesecurityguards.R;
 import com.awwhome.mobilesecurityguards.engine.AddressDao;
+import com.awwhome.mobilesecurityguards.utils.ConstantValue;
+import com.awwhome.mobilesecurityguards.utils.SpUtil;
 
 /**
  * 归属地悬浮框显示服务
@@ -128,6 +130,22 @@ public class AddressService extends Service {
         // 将布局文件转化为View对象
         toastView = View.inflate(this, R.layout.toast_view, null);
         tv_address = (TextView) toastView.findViewById(R.id.tv_address);
+
+        // 创建一个存储图片的数组
+        int[] toastStyle = new int[]{
+                R.drawable.call_locate_white,
+                R.drawable.call_locate_orange,
+                R.drawable.call_locate_blue,
+                R.drawable.call_locate_gray,
+                R.drawable.call_locate_green
+        };
+
+        // 从SP中获取选中的toast风格的索引
+        int toast_style = SpUtil.getInt(getApplicationContext(), ConstantValue.TOAST_STYLE, 0);
+
+        // 5.改变土司的背景颜色
+        tv_address.setBackgroundResource(toastStyle[toast_style]);
+
         windowManager.addView(toastView, mParams);
 
         // 查询号码归属地
