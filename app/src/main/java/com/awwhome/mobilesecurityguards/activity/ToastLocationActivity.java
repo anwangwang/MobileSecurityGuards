@@ -153,7 +153,9 @@ public class ToastLocationActivity extends Activity {
                 }
                 // 在当前的情况下返回false，不响应事件
                 // 返回true，才会去相应事件
-                return true;
+
+                // 既要相应点击事件，又要相应拖拽过程，则此返回值结果要改为false
+                return false;
             }
         });
 
@@ -166,6 +168,16 @@ public class ToastLocationActivity extends Activity {
                     long endTime = System.currentTimeMillis();
                     if (endTime - startTime < 500) {
                         // 两次点击的时间戳少于500毫秒，就是双击
+                        int left = mScreenWidth / 2 - iv_drag.getWidth() / 2;
+                        int top = mScreenHeight / 2 - iv_drag.getHeight() / 2;
+                        int right = mScreenHeight / 2 + iv_drag.getWidth() / 2;
+                        int bottom = mScreenHeight / 2 + iv_drag.getHeight() / 2;
+
+                        // 控件按以上规则显示
+                        iv_drag.layout(left, top, right, bottom);
+                        // 存储位置
+                        SpUtil.putInt(getApplicationContext(), ConstantValue.LOCATION_X, iv_drag.getLeft());
+                        SpUtil.putInt(getApplicationContext(), ConstantValue.LOCATION_Y, iv_drag.getTop());
                     }
                 }
                 startTime = System.currentTimeMillis();
