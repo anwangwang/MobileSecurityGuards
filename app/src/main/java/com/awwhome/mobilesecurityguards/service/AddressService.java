@@ -131,6 +131,10 @@ public class AddressService extends Service {
         toastView = View.inflate(this, R.layout.toast_view, null);
         tv_address = (TextView) toastView.findViewById(R.id.tv_address);
 
+        // 获取土司的位置坐标
+        params.x = SpUtil.getInt(getApplicationContext(), ConstantValue.LOCATION_X, 0);
+        params.y = SpUtil.getInt(getApplicationContext(), ConstantValue.LOCATION_Y, 0);
+
         // 创建一个存储图片的数组
         int[] toastStyle = new int[]{
                 R.drawable.call_locate_white,
